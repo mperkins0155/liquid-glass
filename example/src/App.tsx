@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   ImageBackground,
-  useWindowDimensions,
   Animated,
   View,
   Pressable,
@@ -22,20 +21,9 @@ const AnimatedLiquidGlassView =
   Animated.createAnimatedComponent(LiquidGlassView);
 
 export default function App() {
-  const { height } = useWindowDimensions();
-
   return (
     <>
-      <ImageBackground
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height,
-          width: '100%',
-          position: 'absolute',
-        }}
-        source={background}
-      />
+      <ImageBackground style={styles.background} source={background} />
       <ScrollView style={styles.container}>
         <WeatherWidgets />
         <Button />
@@ -54,16 +42,7 @@ function Button() {
         colorScheme="dark"
         effect={isGlassy ? 'regular' : 'none'}
       >
-        <Text
-          style={{
-            padding: 20,
-            color: 'white',
-            fontSize: 24,
-            fontWeight: 'bold',
-          }}
-        >
-          Click me
-        </Text>
+        <Text style={styles.buttonLabel}>Click me</Text>
       </LiquidGlassView>
     </Pressable>
   );
@@ -85,7 +64,7 @@ function WeatherWidget({
     <LiquidGlassView
       style={[
         styles.weather,
-        !isLiquidGlassSupported && { backgroundColor: 'rgba(0,0,0,0.4)' },
+        !isLiquidGlassSupported && styles.weatherUnsupported,
       ]}
       {...props}
     >
@@ -100,7 +79,7 @@ function WeatherWidget({
 function WeatherWidgets() {
   return (
     <View>
-      <View style={{ flexDirection: 'row', gap: 10, marginBottom: 20 }}>
+      <View style={styles.weatherRow}>
         <WeatherWidget
           city="Wrocław"
           temperature={25}
@@ -118,7 +97,7 @@ function WeatherWidgets() {
         />
       </View>
 
-      <View style={{ flexDirection: 'row', gap: 10, marginBottom: 20 }}>
+      <View style={styles.weatherRow}>
         <WeatherWidget
           city="Warsaw"
           temperature={20}
@@ -154,23 +133,17 @@ function MergingCircles() {
       style={styles.circles}
       onPress={() => setMerged((prev) => !prev)}
     >
-      <LiquidGlassContainerView
-        spacing={20}
-        style={{
-          width: '100%',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+      <LiquidGlassContainerView spacing={20} style={styles.circlesContainer}>
         <AnimatedLiquidGlassView style={styles.circle} effect="clear">
-          <Text style={{ fontSize: 30, color: 'white' }}>1</Text>
+          <Text style={styles.circleLabel}>1</Text>
         </AnimatedLiquidGlassView>
         <AnimatedLiquidGlassView
           effect="clear"
-          style={[styles.circle, { transform: [{ translateX }] }]}
+          style={StyleSheet.compose(styles.circle, {
+            transform: [{ translateX }],
+          })}
         >
-          <Text style={{ fontSize: 30, color: 'white' }}>2</Text>
+          <Text style={styles.circleLabel}>2</Text>
         </AnimatedLiquidGlassView>
       </LiquidGlassContainerView>
     </Pressable>
@@ -178,6 +151,11 @@ function MergingCircles() {
 }
 
 const styles = StyleSheet.create({
+  background: {
+    ...StyleSheet.absoluteFill,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     paddingTop: 60,
@@ -221,11 +199,25 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 20,
   },
+  buttonLabel: {
+    padding: 20,
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
   weather: {
     borderRadius: 20,
     borderCurve: 'continuous',
     minWidth: 170,
     padding: 20,
+  },
+  weatherUnsupported: {
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+  weatherRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 20,
   },
   small: {
     color: 'white',
@@ -247,9 +239,19 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     color: 'white',
   },
+  circleLabel: {
+    fontSize: 30,
+    color: 'white',
+  },
   circles: {
     flexDirection: 'row',
     gap: 10,
+  },
+  circlesContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   toolbar: {
     flexDirection: 'row',
