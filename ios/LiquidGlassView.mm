@@ -63,6 +63,18 @@ using namespace facebook::react;
     _view.effectTintColor = RCTUIColorFromSharedColor(newViewProps.tintColor);
     needsSetup = YES;
   }
+
+  if (oldViewProps.animated != newViewProps.animated) {
+    _view.animated = newViewProps.animated;
+  }
+
+  if (oldViewProps.animationDuration != newViewProps.animationDuration) {
+    _view.animationDuration = newViewProps.animationDuration;
+  }
+
+  if (oldViewProps.hasAnimationDuration != newViewProps.hasAnimationDuration) {
+    _view.hasAnimationDuration = newViewProps.hasAnimationDuration;
+  }
   
   if (oldViewProps.effect != newViewProps.effect) {
     switch (newViewProps.effect) {

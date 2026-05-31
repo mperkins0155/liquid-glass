@@ -2,7 +2,7 @@
  * LiquidGlassView
  */
 export { LiquidGlassView } from './LiquidGlassView';
-export { type NativeProps as LiquidGlassViewProps } from './LiquidGlassViewNativeComponent';
+export { type LiquidGlassViewProps } from './types';
 
 /**
  * LiquidGlassContainerView

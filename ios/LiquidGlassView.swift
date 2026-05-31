@@ -29,6 +29,9 @@ import UIKit
   @objc public var effectTintColor: UIColor?
   @objc public var interactive: Bool = false
   @objc public var style: LiquidGlassEffect = .regular
+  @objc public var animated: Bool = true
+  @objc public var animationDuration: CGFloat = 0
+  @objc public var hasAnimationDuration: Bool = false
 
   public override func layoutSubviews() {
     if (self.effect != nil) { return }
@@ -58,10 +61,8 @@ import UIKit
     }
 
     guard let preferredStyle = style.converted else {
-      UIView.animate {
-        // TODO: Looks like only assigning nil is not working, check this after stable iOS 26 is rolled out.
-        self.effect = UIVisualEffect()
-      }
+      // TODO: Looks like only assigning nil is not working, check this after stable iOS 26 is rolled out.
+      applyEffect(UIVisualEffect())
       return
     }
 
@@ -69,12 +70,7 @@ import UIKit
     glassEffect.isInteractive = interactive
     glassEffect.tintColor = effectTintColor
 
-    if isFirstMount {
-      self.effect = glassEffect
-    } else {
-      // Animate only the effect is changed after first mount.
-      UIView.animate { self.effect = glassEffect }
-    }
+    applyEffect(glassEffect)
 
     // UIGlassEffect can reconfigure the internal contentView in a way that
     // disables user interaction when no subviews are present at the time the
@@ -83,6 +79,24 @@ import UIKit
     // leaving contentView with userInteractionEnabled == false for the
     // lifetime of this view. Force it back on so touches always reach children.
     self.contentView.isUserInteractionEnabled = true
+  }
+
+  private func applyEffect(_ effect: UIVisualEffect) {
+    if isFirstMount || !animated {
+      self.effect = effect
+      isFirstMount = false
+      return
+    }
+
+    if hasAnimationDuration {
+      UIView.animate(withDuration: TimeInterval(animationDuration)) {
+        self.effect = effect
+      }
+    } else {
+      UIView.animate {
+        self.effect = effect
+      }
+    }
   }
 }
 

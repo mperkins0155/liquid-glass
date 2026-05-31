@@ -116,6 +116,8 @@ if (isLiquidGlassSupported) {
 | ------------- | ------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `interactive` | `boolean`                       | `false`     | Enables touch interaction effects when pressing the view                                                                            |
 | `effect`      | `'clear' \| 'regular' \| 'none'` | `'regular'` | Visual effect mode:<br/>• `clear` - More transparent glass effect<br/>• `regular` - Standard glass blur effect<br/>• `none` - No glass effect (transparent view)<br/>**Note:** Changing this property animates the materialization/dematerialization of the glass effect |
+| `animated`    | `boolean`                       | `true`      | Whether to animate changes to the glass effect                                                                                      |
+| `animationDuration` | `number`                  | `undefined` | Duration of the glass effect animation in milliseconds. If omitted, the default UIKit animation duration is used                    |
 | `tintColor`   | `ColorValue`                    | `undefined` | Overlay color tint applied to the glass effect. Accepts any React Native color format (hex, rgba, named colors)                     |
 | `colorScheme` | `'light' \| 'dark' \| 'system'` | `'system'`  | Color scheme adaptation:<br/>• `light` - Light appearance<br/>• `dark` - Dark appearance<br/>• `system` - Follows system appearance |
 

@@ -1,7 +1,7 @@
-import type { NativeProps } from './LiquidGlassViewNativeComponent';
+import type { LiquidGlassViewProps } from './types';
 import { View } from 'react-native';
 
 /**
  * A view that adds the iOS liquid glass effect.
  */
-export const LiquidGlassView: React.ComponentType<NativeProps> = View;
+export const LiquidGlassView: React.ComponentType<LiquidGlassViewProps> = View;
