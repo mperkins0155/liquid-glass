@@ -11,9 +11,15 @@
   if (@available(iOS 26.0, tvOS 26.0, *)) {
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
     BOOL requiresDesignCompatibility = [infoPlist[@"UIDesignRequiresCompatibility"] boolValue];
+    BOOL isGlassEffectAPIAvailable = NO;
+
+    Class glassEffectClass = NSClassFromString(@"UIGlassEffect");
+    if (glassEffectClass != nil) {
+      isGlassEffectAPIAvailable = [glassEffectClass respondsToSelector:NSSelectorFromString(@"effectWithStyle:")];
+    }
     
     _constants = facebook::react::typedConstants<JS::NativeLiquidGlassModule::Constants>({
-      .isLiquidGlassSupported = !requiresDesignCompatibility
+      .isLiquidGlassSupported = !requiresDesignCompatibility && isGlassEffectAPIAvailable
     });
     
     return;
