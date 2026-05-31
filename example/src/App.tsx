@@ -16,6 +16,7 @@ import {
   type LiquidGlassViewProps,
 } from '@callstack/liquid-glass';
 import { useEffect, useState } from 'react';
+import background from './assets/background.jpg';
 
 const AnimatedLiquidGlassView =
   Animated.createAnimatedComponent(LiquidGlassView);
@@ -33,9 +34,7 @@ export default function App() {
           width: '100%',
           position: 'absolute',
         }}
-        source={{
-          uri: 'https://images.unsplash.com/photo-1755289445810-bfe6381d51c4?q=80&w=500&auto=format&fit=crop',
-        }}
+        source={background}
       />
       <ScrollView style={styles.container}>
         <WeatherWidgets />
