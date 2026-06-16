@@ -3,7 +3,7 @@ PODS:
   - hermes-engine (250829098.0.10):
     - hermes-engine/Pre-built (= 250829098.0.10)
   - hermes-engine/Pre-built (250829098.0.10)
-  - LiquidGlass (0.7.1):
+  - LiquidGlass (0.8.0):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2122,7 +2122,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FBLazyVector: c00c20551d40126351a6783c47ce75f5b374851b
   hermes-engine: 08250d7a8ad8e1b147ab35d996c27a68c60cfa17
-  LiquidGlass: 25eca03055588d9311acacbf1bd1bba87c59d479
+  LiquidGlass: d2985bf447536bac9faf652ed793672bc4202894
   RCTDeprecation: 3bb167081b134461cfeb875ff7ae1945f8635257
   RCTRequired: 74839f55d5058a133a0bc4569b0afec750957f64
   RCTSwiftUI: 87a316382f3eab4dd13d2a0d0fd2adcce917361a
