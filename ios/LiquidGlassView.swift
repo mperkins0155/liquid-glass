@@ -25,7 +25,8 @@ import UIKit
 
 @available(iOS 26.0, tvOS 26.0, *)
 @objc public class LiquidGlassViewImpl: UIVisualEffectView {
-  private var isFirstMount: Bool = true
+  private var hasAppliedEffect: Bool = false
+
   @objc public var effectTintColor: UIColor?
   @objc public var interactive: Bool = false
   @objc public var style: LiquidGlassEffect = .regular
@@ -34,12 +35,9 @@ import UIKit
   @objc public var hasAnimationDuration: Bool = false
 
   public override func layoutSubviews() {
-    if (self.effect != nil) { return }
-    setupView()
+    if hasAppliedEffect { return }
 
-    if isFirstMount {
-      isFirstMount = false
-    }
+    setupView()
   }
 
 
@@ -53,7 +51,7 @@ import UIKit
     guard let glassEffectClass = NSClassFromString("UIGlassEffect") as? NSObject.Type else {
       return
     }
-    
+
     // Verify that the effectWithStyle: selector is available
     // This provides an additional safety check for early beta versions
     guard glassEffectClass.responds(to: Selector(("effectWithStyle:"))) else {
@@ -61,12 +59,12 @@ import UIKit
     }
 
     guard let preferredStyle = style.converted else {
-      // TODO: Looks like only assigning nil is not working, check this after stable iOS 26 is rolled out.
-      applyEffect(UIVisualEffect())
+      applyEffect(nil)
       return
     }
 
     let glassEffect = UIGlassEffect(style: preferredStyle)
+
     glassEffect.isInteractive = interactive
     glassEffect.tintColor = effectTintColor
 
@@ -81,10 +79,10 @@ import UIKit
     self.contentView.isUserInteractionEnabled = true
   }
 
-  private func applyEffect(_ effect: UIVisualEffect) {
-    if isFirstMount || !animated {
+  private func applyEffect(_ effect: UIVisualEffect?) {
+    if !hasAppliedEffect || !animated {
       self.effect = effect
-      isFirstMount = false
+      hasAppliedEffect = true
       return
     }
 
