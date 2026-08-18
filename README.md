@@ -127,10 +127,6 @@ if (isLiquidGlassSupported) {
 | --------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------- |
 | `spacing` | `number` | `0`     | The distance between child elements at which they begin to merge their glass effects into a combined effect |
 
-## Known issues
-
-- `interactive` prop is not changed dynamically, it is only set on mount.
-
 ## Made with ❤️ at Callstack
 
 `liquid-glass` is an open source project and will always remain free to use. If you think it's cool, please star it 🌟.

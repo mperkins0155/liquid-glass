@@ -79,6 +79,16 @@ import UIKit
     self.contentView.isUserInteractionEnabled = true
   }
 
+  @objc public func resetInteractiveEffect() {
+    guard hasAppliedEffect else { return }
+
+    // Changing isInteractive on an existing instance doesn't do anything
+    // So we need to set it to nil and reapply it with the new interactive value
+    self.effect = nil
+    hasAppliedEffect = false
+    setupView()
+  }
+
   private func applyEffect(_ effect: UIVisualEffect?) {
     if !hasAppliedEffect || !animated {
       self.effect = effect
